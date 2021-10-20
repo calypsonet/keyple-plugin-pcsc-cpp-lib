@@ -23,7 +23,7 @@
 /* Keyple Core Plugin */
 #include "ObservableReaderSpi.h"
 #include "WaitForCardRemovalBlockingSpi.h"
-#include "WaitForCardRemovalBlockingDuringProcessingSpi.h"
+#include "WaitForCardRemovalDuringProcessingBlockingSpi.h"
 
 /* Keyple Core Util */
 #include "LoggerFactory.h"
@@ -47,7 +47,7 @@ using namespace keyple::plugin::pcsc::cpp;
 class AbstractPcscReaderAdapter
 : public PcscReader,
   public ObservableReaderSpi,
-  public WaitForCardRemovalBlockingDuringProcessingSpi,
+  public WaitForCardRemovalDuringProcessingBlockingSpi,
   public WaitForCardRemovalBlockingSpi {
 public:
     /**
@@ -240,20 +240,14 @@ public:
      *
      * @since 2.0
      */
-    @Override
-    public void waitForCardRemovalDuringProcessing() override {
-        waitForCardRemoval();
-    }
+    void waitForCardRemovalDuringProcessing() override;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    @Override
-    public void stopWaitForCardRemovalDuringProcessing() {
-        stopWaitForCardRemoval();
-    }
+    void stopWaitForCardRemovalDuringProcessing() override;
 
 private:
     /**
