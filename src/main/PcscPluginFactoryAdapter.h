@@ -65,7 +65,7 @@ public:
      *
      * @since 2.0.0
      */
-    const std::string& getCommonsApiVersion() const override;
+    const std::string& getCommonApiVersion() const override;
 
     /**
      * {@inheritDoc}

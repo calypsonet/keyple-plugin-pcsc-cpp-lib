@@ -21,13 +21,13 @@
 #include "PluginApiProperties.h"
 
 /* Keyple Core Common */
-#include "CommonsApiProperties.h"
+#include "CommonApiProperties.h"
 
 namespace keyple {
 namespace plugin {
 namespace pcsc {
 
-using namespace keyple::core::commons;
+using namespace keyple::core::common;
 using namespace keyple::core::plugin;
 
 const std::string PcscPluginFactoryAdapter::PLUGIN_NAME = "PcscPlugin";
@@ -45,7 +45,7 @@ const std::string& PcscPluginFactoryAdapter::getPluginApiVersion() const
     return PluginApiProperties::VERSION;
 }
 
-const std::string& PcscPluginFactoryAdapter::getCommonsApiVersion() const
+const std::string& PcscPluginFactoryAdapter::getCommonApiVersion() const
 {
     return CommonsApiProperties::VERSION;
 }
