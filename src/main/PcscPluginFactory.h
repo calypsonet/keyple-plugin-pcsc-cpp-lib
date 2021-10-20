@@ -19,11 +19,11 @@ namespace keyple {
 namespace plugin {
 namespace pcsc {
 
-using namespace keyple::core::commons;
+using namespace keyple::core::common;
 
 /**
  * PC/SC specific {@link KeyplePluginExtensionFactory} to be provided to the Keyple SmartCard
- * service to register the PC/SC plugin, built by {@link PcscPluginFactoryBuilder}.
+ * service to register the PC/SC plugin, built by PcscPluginFactoryBuilder.
  *
  * @since 2.0.0
  */

@@ -47,7 +47,8 @@ const std::vector<std::shared_ptr<CardTerminal>> PcscPluginAdapter::getCardTermi
 
 std::shared_ptr<ReaderSpi> PcscPluginAdapter::createReader(std::shared_ptr<CardTerminal> terminal)
 {
-    return std::make_shared<PcscReaderAdapter>(terminal, shared_from_this());
+    return std::dynamic_pointer_cast<ReaderSpi>(
+               std::make_shared<PcscReaderAdapter>(terminal, shared_from_this()));
 }
 
 }

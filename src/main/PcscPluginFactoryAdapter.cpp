@@ -47,7 +47,7 @@ const std::string& PcscPluginFactoryAdapter::getPluginApiVersion() const
 
 const std::string& PcscPluginFactoryAdapter::getCommonApiVersion() const
 {
-    return CommonsApiProperties::VERSION;
+    return CommonApiProperties::VERSION;
 }
 
 const std::string& PcscPluginFactoryAdapter::getPluginName() const

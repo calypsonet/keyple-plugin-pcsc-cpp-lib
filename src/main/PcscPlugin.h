@@ -19,7 +19,7 @@ namespace keyple {
 namespace plugin {
 namespace pcsc {
 
-using namespace keyple::core::commons;
+using namespace keyple::core::common;
 
 /**
  * PC/SC specific {@link KeyplePluginExtension}.

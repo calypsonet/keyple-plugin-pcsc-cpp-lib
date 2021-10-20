@@ -18,6 +18,7 @@
 /* Keyple Plugin Pcsc */
 #include "AbstractPcscPluginAdapter.h"
 #include "CardTerminal.h"
+#include "ConfigurableReaderSpi.h"
 #include "PcscReader.h"
 
 /* Keyple Core Plugin */
@@ -46,6 +47,7 @@ using namespace keyple::plugin::pcsc::cpp;
  */
 class AbstractPcscReaderAdapter
 : public PcscReader,
+  public ConfigurableReaderSpi,
   public ObservableReaderSpi,
   public WaitForCardRemovalDuringProcessingBlockingSpi,
   public WaitForCardRemovalBlockingSpi {
@@ -73,7 +75,7 @@ public:
      *
      * @return A not null reference.
      */
-    std::shared_ptr<CardTerminal> getTerminal() const final;
+    std::shared_ptr<CardTerminal> getTerminal() const;
 
     /**
      * {@inheritDoc}
