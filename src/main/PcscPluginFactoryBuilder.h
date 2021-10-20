@@ -49,7 +49,7 @@ namespace pcsc {
  *
  * @see PcscSupportedContactProtocol
  * @see PcscSupportedContactlessProtocol
- * @since 2.0
+ * @since 2.0.0
  */
 class PcscPluginFactoryBuilder final {
 public:
@@ -57,7 +57,7 @@ public:
     /**
      * Builder to build a {@link PcscPluginFactory}.
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     class Builder {
     public:
@@ -84,7 +84,7 @@ public:
          * @return This builder.
          * @throw IllegalArgumentException If the provided string is null or empty.
          * @see #useContactlessReaderIdentificationFilter(String)
-         * @since 2.0
+         * @since 2.0.0
          */
         Builder& useContactReaderIdentificationFilter(
             const std::string contactReaderIdentificationFilter);
@@ -104,7 +104,7 @@ public:
          * @return This builder.
          * @throw IllegalArgumentException If the provided string is null or empty.
          * @see #useContactReaderIdentificationFilter(String)
-         * @since 2.0
+         * @since 2.0.0
          */
         Builder& useContactlessReaderIdentificationFilter(
             const std::string contactlessReaderIdentificationFilter);
@@ -124,7 +124,7 @@ public:
          * @param protocolRule null to disable the protocol.
          * @return This builder.
          * @throw IllegalArgumentException If one of the argument is null or empty
-         * @since 2.0
+         * @since 2.0.0
          */
         Builder& updateProtocolIdentificationRule(
             const std::string& readerProtocolName, const std::string& protocolRule);
@@ -133,7 +133,7 @@ public:
          * Returns an instance of PcscPluginFactory created from the fields set on this builder.
          *
          * @return A {@link PcscPluginFactory}
-         * @since 2.0
+         * @since 2.0.0
          */
         std::shared_ptr<PcscPluginFactory> build();
 
@@ -164,7 +164,7 @@ public:
      * Creates builder to build a {@link PcscPluginFactory}.
      *
      * @return created builder
-     * @since 2.0
+     * @since 2.0.0
      */
     static Builder* builder();
 

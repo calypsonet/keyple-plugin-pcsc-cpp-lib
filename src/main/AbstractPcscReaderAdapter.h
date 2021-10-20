@@ -42,7 +42,7 @@ using namespace keyple::plugin::pcsc::cpp;
  * (package-private) <br>
  * Abstract class for all PC/SC reader adapters.
  *
- * @since 2.0
+ * @since 2.0.0
  */
 class AbstractPcscReaderAdapter
 : public PcscReader,
@@ -57,7 +57,7 @@ public:
      *
      * @param terminal The terminal from smartcard.io
      * @param pluginAdapter The reference to the parent plugin.
-     * @since 2.0
+     * @since 2.0.0
      */
     AbstractPcscReaderAdapter(std::shared_ptr<CardTerminal> terminal, 
                               std::shared_ptr<AbstractPcscPluginAdapter> pluginAdapter);
@@ -78,28 +78,28 @@ public:
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     const std::string& getName() const final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     bool isProtocolSupported(const std::string& readerProtocol) const final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void activateProtocol(const std::string& readerProtocol) final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void deactivateProtocol(const std::string& readerProtocol) final;
 
@@ -107,7 +107,7 @@ public:
      * {@inheritDoc}
      *
      * @throws PatternSyntaxException If the expression's syntax is invalid
-     * @since 2.0
+     * @since 2.0.0
      */
     bool isCurrentProtocol(const std::string& readerProtocol) const final;
 
@@ -117,28 +117,28 @@ public:
      * <p>The physical channel is open using the current sharing mode.
      *
      * @see #setSharingMode(SharingMode)
-     * @since 2.0
+     * @since 2.0.0
      */
     void openPhysicalChannel() final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void closePhysicalChannel() final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     bool isPhysicalChannelOpen() const final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     bool checkCardPresence() final;
 
@@ -148,42 +148,42 @@ public:
      * <p>In the case of a PC/SC reader, the power-on data is provided by the reader in the form of an
      * ATR ISO7816 structure whatever the card.
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     const std::string getPowerOnData() const final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     const std::vector<uint8_t> transmitApdu(const std::vector<uint8_t>& apduCommandData) final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     bool isContactless() final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void onUnregister() final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void onStartDetection() final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void onStopDetection() final;
 
@@ -192,14 +192,14 @@ public:
      *
      * <p>The default value is {@link SharingMode#EXCLUSIVE}.
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     PcscReader& setSharingMode(const SharingMode sharingMode) final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     PcscReader& setContactless(const bool contactless) final;
 
@@ -208,7 +208,7 @@ public:
      *
      * <p>The default value is {@link IsoProtocol#ANY}.
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     PcscReader& setIsoProtocol(const IsoProtocol& isoProtocol) final;
 
@@ -217,35 +217,35 @@ public:
      *
      * <p>The default value is {@link DisconnectionMode#LEAVE}.
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     PcscReader& setDisconnectionMode(const DisconnectionMode disconnectionMode) final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void waitForCardRemoval() final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void stopWaitForCardRemoval() final;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void waitForCardRemovalDuringProcessing() override;
 
     /**
      * {@inheritDoc}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     void stopWaitForCardRemovalDuringProcessing() override;
 
