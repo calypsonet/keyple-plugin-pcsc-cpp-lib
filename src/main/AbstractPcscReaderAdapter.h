@@ -23,7 +23,7 @@
 /* Keyple Core Plugin */
 #include "ObservableReaderSpi.h"
 #include "WaitForCardRemovalBlockingSpi.h"
-#include "WaitForCardRemovalDuringProcessingSpi.h"
+#include "WaitForCardRemovalBlockingDuringProcessingSpi.h"
 
 /* Keyple Core Util */
 #include "LoggerFactory.h"
@@ -47,7 +47,7 @@ using namespace keyple::plugin::pcsc::cpp;
 class AbstractPcscReaderAdapter
 : public PcscReader,
   public ObservableReaderSpi,
-  public WaitForCardRemovalDuringProcessingSpi,
+  public WaitForCardRemovalBlockingDuringProcessingSpi,
   public WaitForCardRemovalBlockingSpi {
 public:
     /**
@@ -73,35 +73,35 @@ public:
      *
      * @return A not null reference.
      */
-    virtual std::shared_ptr<CardTerminal> getTerminal() const final;
+    std::shared_ptr<CardTerminal> getTerminal() const final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual const std::string& getName() const override final;
+    const std::string& getName() const final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual bool isProtocolSupported(const std::string& readerProtocol) const override final;
+    bool isProtocolSupported(const std::string& readerProtocol) const final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual void activateProtocol(const std::string& readerProtocol) override final;
+    void activateProtocol(const std::string& readerProtocol) final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual void deactivateProtocol(const std::string& readerProtocol) override final;
+    void deactivateProtocol(const std::string& readerProtocol) final;
 
     /**
      * {@inheritDoc}
@@ -109,7 +109,7 @@ public:
      * @throws PatternSyntaxException If the expression's syntax is invalid
      * @since 2.0
      */
-    virtual bool isCurrentProtocol(const std::string& readerProtocol) const override final;
+    bool isCurrentProtocol(const std::string& readerProtocol) const final;
 
     /**
      * {@inheritDoc}
@@ -119,28 +119,28 @@ public:
      * @see #setSharingMode(SharingMode)
      * @since 2.0
      */
-    virtual void openPhysicalChannel() override final;
+    void openPhysicalChannel() final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual void closePhysicalChannel() override final;
+    void closePhysicalChannel() final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual bool isPhysicalChannelOpen() const override final;
+    bool isPhysicalChannelOpen() const final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual bool checkCardPresence() override final;
+    bool checkCardPresence() final;
 
     /**
      * {@inheritDoc}
@@ -150,43 +150,42 @@ public:
      *
      * @since 2.0
      */
-    virtual const std::string getPowerOnData() const override final;
+    const std::string getPowerOnData() const final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual const std::vector<uint8_t> transmitApdu(const std::vector<uint8_t>& apduCommandData)
-        override final;
+    const std::vector<uint8_t> transmitApdu(const std::vector<uint8_t>& apduCommandData) final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual bool isContactless() override final;
+    bool isContactless() final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual void onUnregister() override final;
+    void onUnregister() final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual void onStartDetection() override final;
+    void onStartDetection() final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual void onStopDetection() override final;
+    void onStopDetection() final;
 
     /**
      * {@inheritDoc}
@@ -195,14 +194,14 @@ public:
      *
      * @since 2.0
      */
-    virtual PcscReader& setSharingMode(const SharingMode sharingMode) override final;
+    PcscReader& setSharingMode(const SharingMode sharingMode) final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual PcscReader& setContactless(const bool contactless) override final;
+    PcscReader& setContactless(const bool contactless) final;
 
     /**
      * {@inheritDoc}
@@ -211,7 +210,7 @@ public:
      *
      * @since 2.0
      */
-    virtual PcscReader& setIsoProtocol(const IsoProtocol& isoProtocol) override final;
+    PcscReader& setIsoProtocol(const IsoProtocol& isoProtocol) final;
 
     /**
      * {@inheritDoc}
@@ -220,22 +219,41 @@ public:
      *
      * @since 2.0
      */
-    virtual PcscReader& setDisconnectionMode(const DisconnectionMode disconnectionMode) override 
-        final;
+    PcscReader& setDisconnectionMode(const DisconnectionMode disconnectionMode) final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual void waitForCardRemoval() override final;
+    void waitForCardRemoval() final;
 
     /**
      * {@inheritDoc}
      *
      * @since 2.0
      */
-    virtual void stopWaitForCardRemoval() override final;
+    void stopWaitForCardRemoval() final;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 2.0
+     */
+    @Override
+    public void waitForCardRemovalDuringProcessing() override {
+        waitForCardRemoval();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 2.0
+     */
+    @Override
+    public void stopWaitForCardRemovalDuringProcessing() {
+        stopWaitForCardRemoval();
+    }
 
 private:
     /**
