@@ -21,6 +21,8 @@ namespace keyple {
 namespace plugin {
 namespace pcsc {
 
+std::shared_ptr<PcscPluginAdapter> PcscPluginAdapter::INSTANCE;
+
 PcscPluginAdapter::PcscPluginAdapter()
 : AbstractPcscPluginAdapter(PcscPluginFactoryAdapter::PLUGIN_NAME) {}
 

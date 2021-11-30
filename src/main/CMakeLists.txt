@@ -87,6 +87,21 @@ ADD_LIBRARY(
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/CardTerminal.cpp
 )
 
+IF(APPLE)                                                                                           
+        FIND_LIBRARY(PCSC PCSC)                                                                     
+ELSEIF(UNIX)                                                                                            
+        FIND_LIBRARY(PCSC pcsclite)                                                                 
+ELSEIF(WIN32)                                                                                           
+        SET(CMAKE_FIND_LIBRARY_PREFIXES "")                                                         
+        SET(CMAKE_FIND_LIBRARY_SUFFIXES ".dll")                                                     
+        SET(CMAKE_BUILD_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/../../../../..")                     
+        SET(PCSC winscard.lib)                                                                      
+ENDIF(APPLE)                                                                                        
+                                                                                                    
+IF(NOT PCSC)                                                                                        
+        MESSAGE(FATAL_ERROR "PC/SC framework/library not found")                                    
+ENDIF() 
+
 FIND_LIBRARY(UTIL ${KEYPLE_UTIL_LIB} HINTS ${KEYPLE_UTIL_DIR}/build/bin)
 
-TARGET_LINK_LIBRARIES(${LIBRARY_NAME} ${UTIL})
+TARGET_LINK_LIBRARIES(${LIBRARY_NAME} ${PCSC} ${UTIL})

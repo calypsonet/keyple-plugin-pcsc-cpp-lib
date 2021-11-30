@@ -30,42 +30,46 @@ using namespace keyple::core::util::cpp;
 using namespace keyple::core::util::cpp::exception;
 
 const int AbstractPcscPluginAdapter::MONITORING_CYCLE_DURATION_MS = 1000;
-const std::map<std::string, std::string> mProtocolRulesMap = {
-    /* Contactless protocols */
-    {
-        PcscSupportedContactlessProtocol::ISO_14443_4.getName(),
-        PcscSupportedContactlessProtocol::ISO_14443_4.getDefaultRule()
-    }, {
-        PcscSupportedContactlessProtocol::INNOVATRON_B_PRIME_CARD.getName(),
-        PcscSupportedContactlessProtocol::INNOVATRON_B_PRIME_CARD.getDefaultRule()
-    }, {
-        PcscSupportedContactlessProtocol::MIFARE_ULTRA_LIGHT.getName(),
-        PcscSupportedContactlessProtocol::MIFARE_ULTRA_LIGHT.getDefaultRule()
-    }, {
-        PcscSupportedContactlessProtocol::MIFARE_CLASSIC.getName(),
-        PcscSupportedContactlessProtocol::MIFARE_CLASSIC.getDefaultRule()
-    }, {
-        PcscSupportedContactlessProtocol::MIFARE_DESFIRE.getName(),
-        PcscSupportedContactlessProtocol::MIFARE_DESFIRE.getDefaultRule()
-    }, {
-        PcscSupportedContactlessProtocol::MEMORY_ST25.getName(),
-        PcscSupportedContactlessProtocol::MEMORY_ST25.getDefaultRule()
-    }, 
-    /* Contact protocols */
-    {
-        PcscSupportedContactProtocol::ISO_7816_3.getName(),
-        PcscSupportedContactProtocol::ISO_7816_3.getDefaultRule()
-    }, {
-        PcscSupportedContactProtocol::ISO_7816_3_T0.getName(),
-        PcscSupportedContactProtocol::ISO_7816_3_T0.getDefaultRule()
-    }, {
-        PcscSupportedContactProtocol::ISO_7816_3_T1.getName(),
-        PcscSupportedContactProtocol::ISO_7816_3_T1.getDefaultRule()
-    }
-};
 
 AbstractPcscPluginAdapter::AbstractPcscPluginAdapter(const std::string& name)
-: mName(name), mContactReaderIdentificationFilter(""), mContactlessReaderIdentificationFilter("") {}
+: mName(name),
+  mContactReaderIdentificationFilter(""), 
+  mContactlessReaderIdentificationFilter("")
+{
+    mProtocolRulesMap = {
+        /* Contactless protocols */
+        {
+            PcscSupportedContactlessProtocol::ISO_14443_4.getName(),
+            PcscSupportedContactlessProtocol::ISO_14443_4.getDefaultRule()
+        }, {
+            PcscSupportedContactlessProtocol::INNOVATRON_B_PRIME_CARD.getName(),
+            PcscSupportedContactlessProtocol::INNOVATRON_B_PRIME_CARD.getDefaultRule()
+        }, {
+            PcscSupportedContactlessProtocol::MIFARE_ULTRA_LIGHT.getName(),
+            PcscSupportedContactlessProtocol::MIFARE_ULTRA_LIGHT.getDefaultRule()
+        }, {
+            PcscSupportedContactlessProtocol::MIFARE_CLASSIC.getName(),
+            PcscSupportedContactlessProtocol::MIFARE_CLASSIC.getDefaultRule()
+        }, {
+            PcscSupportedContactlessProtocol::MIFARE_DESFIRE.getName(),
+            PcscSupportedContactlessProtocol::MIFARE_DESFIRE.getDefaultRule()
+        }, {
+            PcscSupportedContactlessProtocol::MEMORY_ST25.getName(),
+            PcscSupportedContactlessProtocol::MEMORY_ST25.getDefaultRule()
+        }, 
+        /* Contact protocols */
+        {
+            PcscSupportedContactProtocol::ISO_7816_3.getName(),
+            PcscSupportedContactProtocol::ISO_7816_3.getDefaultRule()
+        }, {
+            PcscSupportedContactProtocol::ISO_7816_3_T0.getName(),
+            PcscSupportedContactProtocol::ISO_7816_3_T0.getDefaultRule()
+        }, {
+            PcscSupportedContactProtocol::ISO_7816_3_T1.getName(),
+            PcscSupportedContactProtocol::ISO_7816_3_T1.getDefaultRule()
+        }
+    };
+}
 
 AbstractPcscPluginAdapter& AbstractPcscPluginAdapter::setContactReaderIdentificationFilter(
     const std::string& contactReaderIdentificationFilter) 
