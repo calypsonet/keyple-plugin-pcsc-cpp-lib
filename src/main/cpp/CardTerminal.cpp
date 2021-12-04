@@ -34,7 +34,6 @@ namespace cpp {
 using namespace keyple::core::util;
 using namespace keyple::core::util::cpp;
 using namespace keyple::core::util::cpp::exception;
-using namespace keyple::core::service;
 using namespace keyple::plugin::pcsc::cpp::exception;
 
 using DisconnectionMode = PcscReader::DisconnectionMode;
