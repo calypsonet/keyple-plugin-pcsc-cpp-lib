@@ -29,7 +29,7 @@ const PcscSupportedContactlessProtocol PcscSupportedContactlessProtocol::MIFARE_
 const PcscSupportedContactlessProtocol PcscSupportedContactlessProtocol::MEMORY_ST25(
     "MEMORY_ST25", "3B8F8001804F0CA000000306070007D0020C00B6");
 
-PcscSupportedContactlessProtocol::PcscSupportedContactlessProtocol(const std::string& name, 
+PcscSupportedContactlessProtocol::PcscSupportedContactlessProtocol(const std::string& name,
                                                                    const std::string& defaultRule)
 : mName(name), mDefaultRule(defaultRule) {}
 

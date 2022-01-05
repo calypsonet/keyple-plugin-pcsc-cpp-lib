@@ -89,12 +89,12 @@ public:
     void endExclusive();
 
     /**
-     * 
+     *
      */
     bool waitForCardAbsent(long timeout);
 
     /**
-     * 
+     *
      */
     bool waitForCardPresent(long timeout);
 
@@ -174,6 +174,16 @@ private:
      *
      */
     void releaseContext();
+
+    /**
+     *
+     */
+    bool connect();
+
+    /**
+     *
+     */
+    void disconnect();
 };
 
 }

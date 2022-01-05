@@ -28,18 +28,18 @@ using namespace keyple::plugin::pcsc::cpp::exception;
 
 const long PcscReaderAdapter::INSERTION_LATENCY = 500;
 
-PcscReaderAdapter::PcscReaderAdapter(std::shared_ptr<CardTerminal> terminal, 
+PcscReaderAdapter::PcscReaderAdapter(std::shared_ptr<CardTerminal> terminal,
                                      std::shared_ptr<AbstractPcscPluginAdapter> pluginAdapter)
 : AbstractPcscReaderAdapter(terminal, pluginAdapter),
   mLoopWaitCard(false) {}
 
-void PcscReaderAdapter::waitForCardInsertion() 
+void PcscReaderAdapter::waitForCardInsertion()
 {
     mLogger->trace("%: start waiting for the insertion of a card in a loop with a latency of %" \
                    " ms\n",
                    getName(),
                    INSERTION_LATENCY);
-    
+
 
     /* Activate loop */
     mLoopWaitCard = true;
@@ -63,14 +63,14 @@ void PcscReaderAdapter::waitForCardInsertion()
                                 std::make_shared<CardException>(e));
     }
 
-    throw TaskCanceledException(getName() + 
+    throw TaskCanceledException(getName() +
                                 ": the wait for a card insertion task has been cancelled.");
 }
 
 void PcscReaderAdapter::stopWaitForCardInsertion()
 {
     mLogger->trace("%: stop waiting for card insertion requested\n", getName());
-    
+
     mLoopWaitCard = false;
 }
 

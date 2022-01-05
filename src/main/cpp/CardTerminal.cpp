@@ -77,19 +77,21 @@ const std::vector<std::string>& CardTerminal::listTerminals()
     }
 
     ret = SCardListReaders(context, NULL, NULL, &len);
-    if (ret != SCARD_S_SUCCESS) {
+    if (ret != SCARD_S_SUCCESS && ret != SCARD_E_NO_READERS_AVAILABLE) {
         throw CardTerminalException("SCardListReaders failed");
     }
 
-    if (!len)
+    if (ret == SCARD_E_NO_READERS_AVAILABLE || len == 0) {
         /* No readers to add to list */
         return list;
+    }
 
     readers = (char*)calloc(len, sizeof(char));
 
-    if (!readers)
+    if (!readers) {
         /* No readers to add to list */
         return list;
+    }
 
     ret = SCardListReaders(context, NULL, readers, &len);
     if (ret != SCARD_S_SUCCESS) {
@@ -98,8 +100,9 @@ const std::vector<std::string>& CardTerminal::listTerminals()
 
     ptr = readers;
 
-    if (!ptr)
+    if (!ptr) {
         return list;
+    }
 
     while (*ptr) {
         std::string s(ptr);
@@ -138,8 +141,26 @@ void CardTerminal::releaseContext()
     mContextEstablished = false;
 }
 
+bool CardTerminal::connect()
+{
+    LONG rv = SCardConnect(mContext,
+                           (LPCSTR)mName.c_str(),
+                           SCARD_SHARE_SHARED,
+                           SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
+                           &mHandle,
+                           &mProtocol);
+
+    return rv == SCARD_S_SUCCESS;
+}
+
+void CardTerminal::disconnect()
+{
+    SCardDisconnect(mHandle, SCARD_LEAVE_CARD);
+}
+
 bool CardTerminal::isCardPresent(bool release)
 {
+    (void)release;
     try {
         establishContext();
     } catch (CardTerminalException& e) {
@@ -147,30 +168,10 @@ bool CardTerminal::isCardPresent(bool release)
         throw;
     }
 
-    DWORD protocol;
-    SCARDHANDLE hCard;
-    LONG rv = SCardConnect(mContext,
-                           (LPCSTR)mName.c_str(),
-                           SCARD_SHARE_SHARED,
-                           SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
-                           &hCard,
-                           &protocol);
-    if (rv != SCARD_S_SUCCESS) {
-        if (rv != static_cast<LONG>(SCARD_E_NO_SMARTCARD) &&
-            rv != static_cast<LONG>(SCARD_W_REMOVED_CARD))
-            mLogger->debug("isCardPresent - error connecting to card (%)\n",
-                           std::string(pcsc_stringify_error(rv)));
+    bool status = connect();
+    disconnect();
 
-        if (release)
-            releaseContext();
-
-        return false;
-    }
-
-    if (release)
-        releaseContext();
-
-    return true;
+    return status;
 }
 
 void CardTerminal::openAndConnect(const std::string& protocol)
@@ -212,11 +213,11 @@ void CardTerminal::openAndConnect(const std::string& protocol)
                    connectProtocol,
                    sharingMode);
 
-    rv = SCardConnect(mContext, 
-                      mName.c_str(), 
+    rv = SCardConnect(mContext,
+                      mName.c_str(),
                       sharingMode,
-                      connectProtocol, 
-                      &mHandle, 
+                      connectProtocol,
+                      &mHandle,
                       &mProtocol);
     if (rv != SCARD_S_SUCCESS) {
         mLogger->error("openAndConnect - SCardConnect failed (%)\n",
@@ -388,7 +389,7 @@ bool CardTerminal::waitForCardAbsent(long timeout)
 
         newMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                      std::chrono::system_clock::now().time_since_epoch()).count();
-        
+
     } while (newMs <= (currentMs + timeout));
 
     return false;
@@ -408,7 +409,7 @@ bool CardTerminal::waitForCardPresent(long timeout)
 
         newMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                      std::chrono::system_clock::now().time_since_epoch()).count();
-        
+
     } while (newMs <= (currentMs + timeout));
 
     return false;
