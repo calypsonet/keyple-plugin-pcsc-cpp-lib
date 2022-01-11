@@ -1,4 +1,4 @@
-url: https://github.com/eclipse/keyple-plugin-cpp-api
+url: https://github.com/eclipse/keyple-plugin-pcsc-cpp-lib
 organization:
   name: Eclipse Keyple
   url: https://keyple.org/
@@ -10,9 +10,9 @@ developers:
   - name: Keyple Contributors
     email: keyple-dev@eclipse.org
 scm:
-  connection: scm:git:git://github.com/eclipse/keyple-plugin-cpp-api.git
-  developerConnection: scm:git:https://github.com/eclipse/keyple-plugin-cpp-api.git
-  url: https://github.com/eclipse/keyple-plugin-cpp-api
+  connection: scm:git:git://github.com/eclipse/keyple-plugin-pcsc-cpp-lib.git
+  developerConnection: scm:git:https://github.com/eclipse/keyple-plugin-pcsc-cpp-lib.git
+  url: https://github.com/eclipse/keyple-plugin-pcsc-cpp-lib
 ciManagement:
   system: GitHub Actions
-  url: https://github.com/eclipse/keyple-common-plugin-api/actions
+  url: https://github.com/eclipse/keyple-plugin-pcsc-cpp/actions

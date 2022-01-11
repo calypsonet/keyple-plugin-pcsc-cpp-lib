@@ -42,12 +42,12 @@ PcscPluginFactoryAdapter::PcscPluginFactoryAdapter(
 
 const std::string& PcscPluginFactoryAdapter::getPluginApiVersion() const
 {
-    return PluginApiProperties::VERSION;
+    return PluginApiProperties_VERSION;
 }
 
 const std::string& PcscPluginFactoryAdapter::getCommonApiVersion() const
 {
-    return CommonApiProperties::VERSION;
+    return CommonApiProperties_VERSION;
 }
 
 const std::string& PcscPluginFactoryAdapter::getPluginName() const
@@ -55,7 +55,7 @@ const std::string& PcscPluginFactoryAdapter::getPluginName() const
     return PLUGIN_NAME;
 }
 
-std::shared_ptr<PluginSpi> PcscPluginFactoryAdapter::getPlugin() 
+std::shared_ptr<PluginSpi> PcscPluginFactoryAdapter::getPlugin()
 {
     std::shared_ptr<AbstractPcscPluginAdapter> plugin = PcscPluginAdapter::getInstance();
     plugin->setContactReaderIdentificationFilter(mContactReaderIdentificationFilter)
