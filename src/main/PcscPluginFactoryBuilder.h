@@ -62,7 +62,7 @@ public:
     class Builder {
     public:
         friend PcscPluginFactoryBuilder;
-        
+
         /**
          * Sets a filter based on regular expressions to make the plugin able to identify a contact
          * reader from its name.
@@ -126,8 +126,8 @@ public:
          * @throw IllegalArgumentException If one of the argument is null or empty
          * @since 2.0.0
          */
-        Builder& updateProtocolIdentificationRule(
-            const std::string& readerProtocolName, const std::string& protocolRule);
+        Builder& updateProtocolIdentificationRule(const std::string& readerProtocolName,
+                                                  const std::string& protocolRule);
 
         /**
          * Returns an instance of PcscPluginFactory created from the fields set on this builder.
@@ -139,17 +139,17 @@ public:
 
     private:
         /**
-         * 
+         *
          */
         std::string mContactReaderIdentificationFilter;
-        
+
         /**
-         * 
+         *
          */
         std::string mContactlessReaderIdentificationFilter;
-        
+
         /**
-         * 
+         *
          */
         std::map<std::string, std::string> mProtocolRulesMap;
 
@@ -166,11 +166,11 @@ public:
      * @return created builder
      * @since 2.0.0
      */
-    static Builder* builder();
+    static std::unique_ptr<Builder> builder();
 
 private:
     /**
-     * 
+     *
      */
     PcscPluginFactoryBuilder() {}
 };

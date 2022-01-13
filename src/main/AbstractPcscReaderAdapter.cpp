@@ -40,7 +40,7 @@ const long AbstractPcscReaderAdapter::REMOVAL_LATENCY = 500;
 AbstractPcscReaderAdapter::AbstractPcscReaderAdapter(
   std::shared_ptr<CardTerminal> terminal, std::shared_ptr<AbstractPcscPluginAdapter> pluginAdapter)
 : mTerminal(terminal),
-  mName(terminal ? terminal->getName() : ""), 
+  mName(terminal ? terminal->getName() : ""),
   mPluginAdapter(pluginAdapter),
   mIsContactless(false),
   mIsInitialized(false),
@@ -61,7 +61,7 @@ std::shared_ptr<CardTerminal> AbstractPcscReaderAdapter::getTerminal() const
     return mTerminal;
 }
 
-const std::string& AbstractPcscReaderAdapter::getName() const 
+const std::string& AbstractPcscReaderAdapter::getName() const
 {
     return mName;
 }
@@ -123,12 +123,12 @@ void AbstractPcscReaderAdapter::openPhysicalChannel()
     try {
         if (!mIsPhysicalChannelOpen) {
             mLogger->debug("%: opening of a card physical channel for protocol '%'\n",
-                           getName(), 
+                           getName(),
                            mProtocol);
             mTerminal->openAndConnect(mProtocol);
             if (mIsModeExclusive) {
                 mTerminal->beginExclusive();
-                mLogger->debug("%: opening of a card physical channel in exclusive mode\n", 
+                mLogger->debug("%: opening of a card physical channel in exclusive mode\n",
                                getName());
             } else {
                 mLogger->debug("%: opening of a card physical channel in shared mode\n", getName());
@@ -143,17 +143,17 @@ void AbstractPcscReaderAdapter::openPhysicalChannel()
     }
 }
 
-void AbstractPcscReaderAdapter::closePhysicalChannel() 
+void AbstractPcscReaderAdapter::closePhysicalChannel()
 {
     try {
         if (mIsPhysicalChannelOpen) {
             mTerminal->closeAndDisconnect(mDisconnectionMode);
         } else {
-            mLogger->debug("%: card object found null when closing the physical channel\n", 
+            mLogger->debug("%: card object found null when closing the physical channel\n",
                            getName());
         }
     } catch (const CardException& e) {
-        throw ReaderIOException("Error while closing physical channel", 
+        throw ReaderIOException("Error while closing physical channel",
                                 std::make_shared<CardException>(e));
     }
 
@@ -170,7 +170,7 @@ bool AbstractPcscReaderAdapter::checkCardPresence()
     try {
         return mTerminal->isCardPresent(false);
     } catch (const CardException& e) {
-        throw ReaderIOException("Exception occurred in isCardPresent", 
+        throw ReaderIOException("Exception occurred in isCardPresent",
                                 std::make_shared<CardException>(e));
     }
 }
@@ -190,7 +190,7 @@ const std::vector<uint8_t> AbstractPcscReaderAdapter::transmitApdu(
             apduResponseData = mTerminal->transmitApdu(apduCommandData);
         } catch (const CardException& e) {
             if (e.getMessage().find("REMOVED") != std::string::npos) {
-                throw CardIOException(getName() + ":" + e.getMessage(), 
+                throw CardIOException(getName() + ":" + e.getMessage(),
                                       std::make_shared<CardException>(e));
             } else {
                 throw ReaderIOException(getName() + ":" + e.getMessage(),
@@ -198,7 +198,7 @@ const std::vector<uint8_t> AbstractPcscReaderAdapter::transmitApdu(
             }
         } catch (const IllegalStateException& e) {
             /* Card could have been removed prematurely */
-            throw CardIOException(getName() + ":" + e.getMessage(), 
+            throw CardIOException(getName() + ":" + e.getMessage(),
                                   std::make_shared<IllegalStateException>(e));
         }
     } else {
@@ -237,17 +237,17 @@ void AbstractPcscReaderAdapter::onStopDetection()
     /* Nothing to do here in this reader */
 }
 
-PcscReader& AbstractPcscReaderAdapter::setSharingMode(const SharingMode sharingMode) 
+PcscReader& AbstractPcscReaderAdapter::setSharingMode(const SharingMode sharingMode)
 {
     mLogger->trace("%: set sharing mode to %\n", getName(), sharingMode);
-        
+
     if (sharingMode == SharingMode::SHARED) {
         /* If a card is present, change the mode immediately */
         if (mIsPhysicalChannelOpen) {
             try {
                 mTerminal->endExclusive();
             } catch (const CardException& e) {
-                throw IllegalStateException("Couldn't disable exclusive mode", 
+                throw IllegalStateException("Couldn't disable exclusive mode",
                                             std::make_shared<CardException>(e));
             }
         }
@@ -260,21 +260,22 @@ PcscReader& AbstractPcscReaderAdapter::setSharingMode(const SharingMode sharingM
     return *this;
 }
 
-PcscReader& AbstractPcscReaderAdapter::setContactless(const bool contactless) 
+PcscReader& AbstractPcscReaderAdapter::setContactless(const bool contactless)
 {
     mLogger->trace("%: set contactless type: %\n", getName(), contactless);
-    
+
     mIsContactless = contactless;
-    
+    mIsInitialized = true;
+
     return *this;
 }
 
 PcscReader& AbstractPcscReaderAdapter::setIsoProtocol(const IsoProtocol& isoProtocol)
 {
     mLogger->trace("%: set ISO protocol to % (%)\n", getName(), isoProtocol, isoProtocol.getValue());
-    
+
     mProtocol = isoProtocol.getValue();
-    
+
     return *this;
 }
 
@@ -282,9 +283,9 @@ PcscReader& AbstractPcscReaderAdapter::setDisconnectionMode(
     const DisconnectionMode disconnectionMode)
 {
     mLogger->trace("%: set disconnection to %\n", getName(), disconnectionMode);
-    
+
     mDisconnectionMode = disconnectionMode;
-    
+
     return *this;
 }
 
@@ -294,7 +295,7 @@ void AbstractPcscReaderAdapter::waitForCardRemoval()
                    "ms\n",
                    getName(),
                    REMOVAL_LATENCY);
-    
+
 
     /* Activate loop */
     mLoopWaitCardRemoval = true;
@@ -313,19 +314,19 @@ void AbstractPcscReaderAdapter::waitForCardRemoval()
         }
     } catch (const CardException& e) {
         /* Here, it is a communication failure with the reader */
-        throw ReaderIOException(getName() + 
-                                ": an error occurred while waiting for the card removal.", 
+        throw ReaderIOException(getName() +
+                                ": an error occurred while waiting for the card removal.",
                                 std::make_shared<CardException>(e));
     }
 
-    throw TaskCanceledException(getName() + 
+    throw TaskCanceledException(getName() +
                                 ": the wait for the card removal task has been cancelled.");
 }
 
 void AbstractPcscReaderAdapter::stopWaitForCardRemoval()
 {
     mLogger->trace("%: stop waiting for the card removal requested\n", getName());
-    
+
     mLoopWaitCardRemoval = false;
 }
 

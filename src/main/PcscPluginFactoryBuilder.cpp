@@ -24,37 +24,36 @@ namespace pcsc {
 
 using namespace keyple::core::util;
 
+using Builder = PcscPluginFactoryBuilder::Builder;
+
 /* BUILDER -------------------------------------------------------------------------------------- */
 
-PcscPluginFactoryBuilder::Builder::Builder() {}
+Builder::Builder() {}
 
-PcscPluginFactoryBuilder::Builder&
-    PcscPluginFactoryBuilder::Builder::useContactReaderIdentificationFilter(
-        const std::string contactReaderIdentificationFilter)
+Builder& Builder::useContactReaderIdentificationFilter(
+    const std::string contactReaderIdentificationFilter)
 {
-    Assert::getInstance().notEmpty(contactReaderIdentificationFilter, 
+    Assert::getInstance().notEmpty(contactReaderIdentificationFilter,
                                    "contactReaderIdentificationFilter");
-    
+
     mContactReaderIdentificationFilter = contactReaderIdentificationFilter;
-    
+
     return *this;
 }
 
-PcscPluginFactoryBuilder::Builder& 
-    PcscPluginFactoryBuilder::Builder::useContactlessReaderIdentificationFilter(
-        const std::string contactlessReaderIdentificationFilter)
+Builder& Builder::useContactlessReaderIdentificationFilter(
+    const std::string contactlessReaderIdentificationFilter)
 {
-    Assert::getInstance().notEmpty(contactlessReaderIdentificationFilter, 
+    Assert::getInstance().notEmpty(contactlessReaderIdentificationFilter,
                                    "contactlessReaderIdentificationFilter");
-    
+
     mContactlessReaderIdentificationFilter = contactlessReaderIdentificationFilter;
 
     return *this;
 }
 
-PcscPluginFactoryBuilder::Builder& 
-    PcscPluginFactoryBuilder::Builder::updateProtocolIdentificationRule(
-        const std::string& readerProtocolName, const std::string& protocolRule)
+Builder& Builder::updateProtocolIdentificationRule(const std::string& readerProtocolName,
+                                                   const std::string& protocolRule)
 {
     Assert::getInstance().notEmpty(readerProtocolName, "readerProtocolName");
     if (protocolRule == "") {
@@ -76,9 +75,9 @@ std::shared_ptr<PcscPluginFactory> PcscPluginFactoryBuilder::Builder::build()
 
 /* PCSC PLUGIN FACTORY BUILDER ------------------------------------------------------------------ */
 
-PcscPluginFactoryBuilder::Builder* PcscPluginFactoryBuilder::builder()
+std::unique_ptr<Builder> PcscPluginFactoryBuilder::builder()
 {
-    return new PcscPluginFactoryBuilder::Builder();
+    return std::unique_ptr<Builder>(new Builder());
 }
 
 }
