@@ -61,7 +61,7 @@ const std::string& CardTerminal::getName() const
 
 const std::vector<std::string>& CardTerminal::listTerminals()
 {
-    LONG ret;
+    ULONG ret;
     SCARDCONTEXT context;
     char* readers = NULL;
     char* ptr     = NULL;
