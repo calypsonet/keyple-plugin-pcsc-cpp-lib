@@ -19,6 +19,7 @@ SET(CALYPSONET_READER_DIR  "../../../calypsonet-terminal-reader-cpp-api")
 SET(KEYPLE_COMMON_DIR      "../../../keyple-common-cpp-api")
 SET(KEYPLE_PLUGIN_DIR      "../../../keyple-plugin-cpp-api")
 SET(KEYPLE_UTIL_DIR        "../../../keyple-util-cpp-lib")
+
 SET(KEYPLE_UTIL_LIB        "keypleutilcpplib")
 
 INCLUDE_DIRECTORIES(

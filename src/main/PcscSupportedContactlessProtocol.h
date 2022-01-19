@@ -14,6 +14,9 @@
 
 #include <string>
 
+/* Keyple Plugin Pcsc */
+#include "KeyplePluginPcscExport.h"
+
 namespace keyple {
 namespace plugin {
 namespace pcsc {
@@ -34,7 +37,7 @@ namespace pcsc {
  *
  * @since 2.0.0
  */
-class PcscSupportedContactlessProtocol {
+class KEYPLEPLUGINPCSC_API PcscSupportedContactlessProtocol {
 public:
     /**
      * Fully ISO 14443-4 compliant cards<br>

@@ -17,6 +17,7 @@
 #include <string>
 
 /* Keyple Plugin Pcsc */
+#include "KeyplePluginPcscExport.h"
 #include "PcscPluginFactory.h"
 
 namespace keyple {
@@ -24,10 +25,10 @@ namespace plugin {
 namespace pcsc {
 
 /**
- * Builds instances of {@link PcscPluginFactory} from values configured by the setters.
+ * Builds instances of PcscPluginFactory from values configured by the setters.
  *
  * <p>The Builder checks if a value configured by a setter satisfies the syntax requirements defined
- * by the {@link PcscPluginFactoryAdapter} class.
+ * by the PcscPluginFactoryAdapter class.
  *
  * <p>The following example shows how to create a PcscPluginFactory object with the
  * PcscPluginFactoryBuilder.
@@ -51,7 +52,7 @@ namespace pcsc {
  * @see PcscSupportedContactlessProtocol
  * @since 2.0.0
  */
-class PcscPluginFactoryBuilder final {
+class KEYPLEPLUGINPCSC_API PcscPluginFactoryBuilder final {
 public:
 
     /**
@@ -59,7 +60,7 @@ public:
      *
      * @since 2.0.0
      */
-    class Builder {
+    class KEYPLEPLUGINPCSC_API Builder {
     public:
         friend PcscPluginFactoryBuilder;
 

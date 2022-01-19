@@ -18,6 +18,9 @@
 /* Keyple Core Common */
 #include "KeypleReaderExtension.h"
 
+/* Keyple Plugin Pcsc */
+#include "KeyplePluginPcscExport.h"
+
 namespace keyple {
 namespace plugin {
 namespace pcsc {
@@ -31,7 +34,7 @@ using namespace keyple::core::common;
  *
  * @since 2.0.0
  */
-class PcscReader : public KeypleReaderExtension {
+class KEYPLEPLUGINPCSC_API PcscReader : public KeypleReaderExtension {
 public:
     /**
      * Connection mode to indicate if the application is willing to share the card with other
@@ -42,7 +45,7 @@ public:
      *
      * @since 2.0.0
      */
-    enum class SharingMode {
+    enum class KEYPLEPLUGINPCSC_API SharingMode {
         /**
          * Allows simultaneous access to the card
          *
@@ -63,7 +66,7 @@ public:
      *
      * @since 2.0.0
      */
-    class IsoProtocol {
+    class KEYPLEPLUGINPCSC_API IsoProtocol {
     public:
         /**
          * to connect using any available protocol

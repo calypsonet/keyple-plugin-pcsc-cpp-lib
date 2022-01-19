@@ -14,6 +14,9 @@
 
 #include <string>
 
+ /* Keyple Plugin Pcsc */
+#include "KeyplePluginPcscExport.h"
+
 namespace keyple {
 namespace plugin {
 namespace pcsc {
@@ -25,7 +28,7 @@ namespace pcsc {
  *
  * @since 2.0.0
  */
-class PcscSupportedContactProtocol {
+class KEYPLEPLUGINPCSC_API PcscSupportedContactProtocol {
 public:
     /**
      * ISO7816-3 Card (unspecified communication protocol)<br>

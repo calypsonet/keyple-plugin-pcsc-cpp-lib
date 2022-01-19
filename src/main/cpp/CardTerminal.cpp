@@ -281,7 +281,7 @@ std::vector<uint8_t> CardTerminal::transmitApdu(const std::vector<uint8_t>& apdu
      * Note that we modify the 'command' array in some cases, so it must be a copy of the
      * application provided data
      */
-    int n   = _apduIn.size();
+    int n   = static_cast<int>(_apduIn.size());
     bool t0 = mProtocol == SCARD_PROTOCOL_T0;
     bool t1 = mProtocol == SCARD_PROTOCOL_T1;
 
@@ -320,7 +320,7 @@ std::vector<uint8_t> CardTerminal::transmitApdu(const std::vector<uint8_t>& apdu
         rv = SCardTransmit(mHandle,
                            &mPioSendPCI,
                            (LPCBYTE)_apduIn.data(),
-                           _apduIn.size(),
+                           static_cast<DWORD>(_apduIn.size()),
                            NULL,
                            (LPBYTE)r_apdu,
                            &dwRecv);
@@ -334,7 +334,7 @@ std::vector<uint8_t> CardTerminal::transmitApdu(const std::vector<uint8_t>& apdu
 
         mLogger->debug("[%] transmitApdu - r-apdu << %\n", mName, response);
 
-        int rn = response.size();
+        int rn = static_cast<int>(response.size());
         if (getresponse && (rn >= 2)) {
             /* See ISO 7816/2005, 5.1.3 */
             if ((rn == 2) && (response[0] == 0x6c)) {
@@ -377,8 +377,8 @@ void CardTerminal::endExclusive()
 
 bool CardTerminal::waitForCardAbsent(long timeout)
 {
-    long newMs = 0;
-    long currentMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+    uint64_t newMs = 0;
+    uint64_t currentMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                          std::chrono::system_clock::now().time_since_epoch()).count();
 
     do {
@@ -397,8 +397,8 @@ bool CardTerminal::waitForCardAbsent(long timeout)
 
 bool CardTerminal::waitForCardPresent(long timeout)
 {
-    long newMs = 0;
-    long currentMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+    uint64_t newMs = 0;
+    uint64_t currentMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                          std::chrono::system_clock::now().time_since_epoch()).count();
 
     do {
